@@ -3,26 +3,12 @@ const router = express.Router();
 const cors = require('cors');
 const { registerUser, test, getProfile, logoutUser, loginUser } = require('../controllers/authCotroller');
 
-// middleware
-import cors from 'cors';
-
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://e-learning-qk1g.onrender.com'
-];
-
+//middleware
 router.use(
-  cors({
-    credentials: true,
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    }
-  })
+    cors({
+        credentials: true,
+        origin: 'https://e-learning-qk1g.onrender.com',
+    })
 );
 
 // Routes
