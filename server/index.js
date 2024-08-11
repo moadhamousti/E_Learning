@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const app = express();
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -13,37 +12,21 @@ mongoose.connect(process.env.MONGO_URL, {
 .then(() => console.log('MongoDB connected...'))
 .catch((err) => console.log('Database not connected', err));
 
-// CORS Configuration
-const allowedOrigins = process.env.NODE_ENV === 'production'
-    ? [
-        process.env.ORIGIN_1, 
-        process.env.ORIGIN_2, 
-        process.env.ORIGIN_3
-      ]
-    : ['http://localhost:5173']; // Local development
-
-app.use(cors({
-    origin: (origin, callback) => {
-        console.log('Origin:', origin); // Debugging: Log the origin
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-}));
-
 // Middlewares
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.json({ limit: '50mb' })); // Increase payload limit
+app.use(express.urlencoded({ limit: '50mb', extended: true })); // Increase payload limit
 app.use(cookieParser());
+
+// Configure CORS middleware
+app.use(cors({
+    origin: 'https://e-learning-bay-eight.vercel.app/', // Replace with the origin of your frontend application
+    credentials: true // Allow credentials
+}));
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/courses', require('./routes/coursesRoute'));
-app.use('/api/form', require('./routes/formRoutes'));
+app.use('/api/form', require('./routes/formRoutes')); // Make sure this matches your API calls
 app.use('/', require('./routes/dashboardRoutes'));
 app.use('/api', require('./routes/userRoutes'));
 
