@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { useState } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 // import '../src/components/Navbar'
 import Login from '../src/pages/Login';
 import Register from '../src/pages/Register';
@@ -8,8 +8,8 @@ import HomeNavbar from '../src/components/HomeNavbar';
 import Formation from '../src/pages/Formation';
 import Form from '../src/pages/Form';
 import axios from 'axios';
-import {Toaster} from 'react-hot-toast'
-import {UserContextProvider} from '../context/userContext/'
+import { Toaster } from 'react-hot-toast';
+import { UserContextProvider } from '../context/userContext/';
 import Dashboard from './pages/Dashboard';
 import ViewUser from './pages/ViewUser';
 import EditUser from './pages/EditUser';
@@ -23,15 +23,16 @@ import CourseVideos from './pages/CourseVideos';
 import ViewForm from './pages/ViewForm';
 import EditForm from './pages/EditForm';
 
-
-axios.defaults.baseURL= 'http://localhost:8000';
+// Set base URL based on the environment
+const isLocalhost = window.location.hostname === 'localhost';
+const baseURL = isLocalhost ? 'http://localhost:8000' : 'https://e-learning-qk1g.onrender.com';
+axios.defaults.baseURL = baseURL;
 axios.defaults.withCredentials = true;
 
 function App() {
-  
   return (
     <UserContextProvider>
-    <Toaster position='bottom-right' toatOption={{duration:2000}} />
+      <Toaster position='bottom-right' toastOptions={{ duration: 2000 }} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/" element={<HomeNavbar />} />
@@ -50,11 +51,11 @@ function App() {
         <Route path="/courses/edit/:courseId" element={<EditCourse />} />
         <Route path="/view-user/:userId" element={<ViewUser />} />
         <Route path="/edit-user/:userId" element={<EditUser />} />
-        <Route path="/form" to="/form" element={<Form />} />
+        <Route path="/form" element={<Form />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      </UserContextProvider>
-      )
+    </UserContextProvider>
+  );
 }
 
-export default App
+export default App;
