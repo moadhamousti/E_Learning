@@ -25,7 +25,7 @@ import EditForm from './pages/EditForm';
 
 // Set base URL based on the environment
 const isLocalhost = window.location.hostname === 'localhost';
-const baseURL = isLocalhost ? 'http://localhost:8000' : 'https://e-learning-qk1g.onrender.com';
+const baseURL = isLocalhost ? 'http://localhost:8000' : 'https://66b8f5e11c5cc28ce6094c0e--peppy-vacherin-d1b1d9.netlify.app/';
 axios.defaults.baseURL = baseURL;
 axios.defaults.withCredentials = true;
 
