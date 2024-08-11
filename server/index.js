@@ -14,25 +14,10 @@ mongoose.connect(process.env.MONGO_URL, {
 .catch((err) => console.log('Database not connected', err));
 
 // CORS Configuration
-const allowedOrigins = process.env.NODE_ENV === 'production'
-    ? [
-        process.env.ORIGIN_1, 
-        process.env.ORIGIN_2, 
-        process.env.ORIGIN_3
-      ]
-    : ['http://localhost:5173']; // Local development
-
 app.use(cors({
-    origin: (origin, callback) => {
-        console.log('Origin:', origin); // Debugging: Log the origin
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: '*', // Allow all origins temporarily
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Ensure OPTIONS is included
 }));
 
 // Middlewares
