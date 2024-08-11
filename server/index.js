@@ -18,21 +18,21 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
     ? [
         process.env.ORIGIN_1, 
         process.env.ORIGIN_2, 
-        process.env.ORIGIN_3 // Add the third origin here
+        process.env.ORIGIN_3
       ]
     : ['http://localhost:5173']; // Local development
 
 app.use(cors({
     origin: (origin, callback) => {
         console.log('Origin:', origin); // Debugging: Log the origin
-        if (allowedOrigins.includes(origin) || !origin) { // Allow requests with no origin (e.g., Postman)
+        if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Ensure OPTIONS is included
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
 
 // Middlewares
